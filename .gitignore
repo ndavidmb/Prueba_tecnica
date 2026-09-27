@@ -1,0 +1,29 @@
+### macOS ###
+.DS_Store
+
+### JetBrains (Rider/IntelliJ) ###
+.idea/
+
+### Visual Studio / VS Code ###
+.vs/
+.vscode/
+*.user
+*.suo
+
+### .NET ###
+bin/
+obj/
+*.dll
+*.pdb
+
+### Node / Angular ###
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+*.env
+.env.local
+
+### Misc project artifacts ###
+2026-*-local-command-*.txt
