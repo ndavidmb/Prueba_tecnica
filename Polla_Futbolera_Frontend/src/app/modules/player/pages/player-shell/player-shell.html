@@ -1,0 +1,31 @@
+<div class="min-h-screen bg-gray-100">
+  <nav class="border-b flex gap-10 px-4 py-2 items-center justify-center border-gray-200 bg-surface">
+    <a
+      routerLink="leaderboard"
+      routerLinkActive="border-primary text-primary"
+      class="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-secondary"
+    >
+      Leaderboard
+    </a>
+    <a
+      routerLink="matches"
+      routerLinkActive="border-primary text-primary"
+      class="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-secondary"
+    >
+      Partidos
+    </a>
+    <button
+      type="button"
+      (click)="logout()"
+      class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover"
+    >
+      Cerrar sesión
+    </button>
+  </nav>
+
+  <h1 class="w-full flex justify-center px-4 pt-2 text-3xl font-bold text-primary">
+    Hola, {{ user()?.name }}.
+  </h1>
+
+  <router-outlet />
+</div>

@@ -1,0 +1,47 @@
+<div class="mt-4 rounded-lg bg-surface p-6 shadow">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-lg font-semibold text-primary">
+      Historial{{ history() ? ' de ' + history()!.userName : '' }}
+    </h2>
+    <button type="button" (click)="close.emit()" class="text-sm text-gray-500 hover:text-secondary">Cerrar</button>
+  </div>
+
+  @if (loading()) {
+    <p class="text-sm text-gray-600">Cargando historial...</p>
+  } @else if (history()) {
+    <p class="mb-4 text-sm text-gray-600">Puntos totales: {{ history()!.totalPoints }}</p>
+
+    @if (history()!.bets.length === 0) {
+      <p class="text-sm text-gray-600">Este usuario todavía no tiene apuestas.</p>
+    } @else {
+      <div class="overflow-hidden rounded-md border border-gray-200">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200 bg-gray-50 text-left text-xs font-medium uppercase text-gray-500">
+              <th class="px-3 py-2">Partido</th>
+              <th class="px-3 py-2">Predicción</th>
+              <th class="px-3 py-2">Resultado</th>
+              <th class="px-3 py-2">Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (bet of history()!.bets; track bet.betId) {
+              <tr class="border-b border-gray-200 last:border-b-0">
+                <td class="px-3 py-2 text-sm text-gray-900">{{ bet.localTeamName }} vs {{ bet.visitorTeamName }}</td>
+                <td class="px-3 py-2 text-sm text-gray-600">{{ bet.predictedLocalGoals }} - {{ bet.predictedVisitorGoals }}</td>
+                <td class="px-3 py-2 text-sm text-gray-600">
+                  @if (bet.realLocalGoals === null || bet.realVisitorGoals === null) {
+                    Pendiente
+                  } @else {
+                    {{ bet.realLocalGoals }} - {{ bet.realVisitorGoals }}
+                  }
+                </td>
+                <td class="px-3 py-2 text-sm font-medium text-gray-900">{{ bet.pointsEarned }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

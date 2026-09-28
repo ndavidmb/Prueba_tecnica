@@ -1,0 +1,49 @@
+<div class="min-h-screen bg-gray-100 px-4 py-8">
+  <div class="mx-auto max-w-3xl">
+    <div class="flex justify-between w-full">
+      <h1 class="mb-6 text-2xl font-semibold text-primary">Administración de partidos</h1>
+      <button
+        type="button"
+        (click)="logout()"
+        class="rounded-lg bg-primary h-10 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="mb-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-700">{{ errorMessage() }}</p>
+    }
+
+    @if (loading()) {
+      <p class="text-sm text-gray-600">Cargando partidos...</p>
+    } @else if (matches().length === 0) {
+      <p class="text-sm text-gray-600">No hay partidos registrados.</p>
+    } @else {
+      <div class="overflow-hidden rounded-lg bg-surface shadow">
+        <table class="w-full">
+          <thead>
+            <tr
+              class="border-b border-gray-200 bg-gray-50 text-left text-xs font-medium uppercase text-gray-500"
+            >
+              <th class="px-4 py-3">Local</th>
+              <th class="px-4 py-3" colspan="3">Marcador</th>
+              <th class="px-4 py-3">Visitante</th>
+              <th class="px-4 py-3">Estado</th>
+              <th class="px-4 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (match of matches(); track match.id) {
+              <app-match-row
+                [match]="match"
+                [saving]="savingId() === match.id"
+                (save)="onSave(match.id, $event)"
+              />
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

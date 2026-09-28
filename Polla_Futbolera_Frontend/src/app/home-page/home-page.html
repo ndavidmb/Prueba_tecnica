@@ -1,0 +1,19 @@
+<div class="flex min-h-screen flex-col items-center justify-center gap-4 bg-gray-100 px-4">
+  <h1 class="text-2xl font-semibold text-primary">Bienvenido, {{ user()?.name }}</h1>
+  <p class="text-sm text-gray-600">Rol: {{ user()?.role }}</p>
+  <a routerLink="/player" class="text-sm font-medium text-secondary hover:text-secondary-hover hover:underline">
+    Ir a leaderboard y partidos
+  </a>
+  @if (user()?.role === 'Admin') {
+    <a routerLink="/admin/matches" class="text-sm font-medium text-secondary hover:text-secondary-hover hover:underline">
+      Administrar partidos
+    </a>
+  }
+  <button
+    type="button"
+    (click)="logout()"
+    class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover"
+  >
+    Cerrar sesión
+  </button>
+</div>

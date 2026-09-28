@@ -1,0 +1,23 @@
+<div class="mx-auto max-w-3xl px-4 py-8">
+  @if (loadErrorMessage()) {
+    <p class="mb-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-700">{{ loadErrorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="text-sm text-gray-600">Cargando partidos...</p>
+  } @else if (matches().length === 0) {
+    <p class="text-sm text-gray-600">No hay partidos registrados.</p>
+  } @else {
+    <div class="flex flex-col gap-3">
+      @for (match of matches(); track match.id) {
+        <app-match-bet-row
+          [match]="match"
+          [placedBet]="placedBets()[match.id] ?? null"
+          [saving]="savingMatchId() === match.id"
+          [errorMessage]="errorsByMatchId()[match.id] ?? null"
+          (placeBet)="onPlaceBet(match.id, $event)"
+        />
+      }
+    </div>
+  }
+</div>

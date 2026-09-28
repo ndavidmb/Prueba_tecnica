@@ -1,0 +1,51 @@
+<div class="flex flex-col gap-3 rounded-lg bg-surface p-4 shadow sm:flex-row sm:items-center sm:justify-between">
+  <div class="flex items-center gap-3 text-sm text-gray-900">
+    <span class="font-medium">{{ match().localTeam.name }}</span>
+    <span class="text-gray-400">vs</span>
+    <span class="font-medium">{{ match().visitorTeam.name }}</span>
+
+    @if (!isUpcoming()) {
+      <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
+        Finalizado: {{ match().localGoals }} - {{ match().visitorGoals }}
+      </span>
+    }
+  </div>
+
+  <div class="flex items-center gap-2">
+    @if (placedBet(); as bet) {
+      <span class="text-sm text-gray-600">
+        Tu apuesta: {{ bet.predictedLocalGoals }} - {{ bet.predictedVisitorGoals }} (puntos: {{ bet.pointsEarned }})
+      </span>
+    } @else if (isUpcoming()) {
+      <input
+        type="number"
+        min="0"
+        [(ngModel)]="localGoals"
+        [disabled]="saving()"
+        class="w-14 rounded-md border border-gray-300 px-2 py-1 text-center text-sm disabled:bg-gray-100"
+      />
+      <span class="text-gray-400">-</span>
+      <input
+        type="number"
+        min="0"
+        [(ngModel)]="visitorGoals"
+        [disabled]="saving()"
+        class="w-14 rounded-md border border-gray-300 px-2 py-1 text-center text-sm disabled:bg-gray-100"
+      />
+      <button
+        type="button"
+        (click)="onSubmit()"
+        [disabled]="!canSubmit()"
+        class="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {{ saving() ? 'Apostando...' : 'Apostar' }}
+      </button>
+    } @else {
+      <span class="text-sm text-gray-500">No apostaste en este partido</span>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <p class="text-xs text-red-600 sm:basis-full">{{ errorMessage() }}</p>
+  }
+</div>

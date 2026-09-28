@@ -1,0 +1,40 @@
+<tr class="border-b border-gray-200">
+  <td class="px-4 py-3 text-sm text-gray-900">{{ match().localTeam.name }}</td>
+  <td class="px-4 py-3">
+    <input
+      type="number"
+      min="0"
+      [(ngModel)]="localGoals"
+      [disabled]="!editable() || saving()"
+      class="w-16 rounded-md border border-gray-300 px-2 py-1 text-center text-sm disabled:bg-gray-100 disabled:text-gray-400"
+    />
+  </td>
+  <td class="px-4 py-3 text-center text-sm text-gray-500">vs</td>
+  <td class="px-4 py-3">
+    <input
+      type="number"
+      min="0"
+      [(ngModel)]="visitorGoals"
+      [disabled]="!editable() || saving()"
+      class="w-16 rounded-md border border-gray-300 px-2 py-1 text-center text-sm disabled:bg-gray-100 disabled:text-gray-400"
+    />
+  </td>
+  <td class="px-4 py-3 text-sm text-gray-900">{{ match().visitorTeam.name }}</td>
+  <td class="px-4 py-3">
+    @if (editable()) {
+      <span class="rounded-full bg-warm px-2 py-1 text-xs font-medium text-primary">Por jugar</span>
+    } @else {
+      <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">Finalizado</span>
+    }
+  </td>
+  <td class="px-4 py-3">
+    <button
+      type="button"
+      (click)="onSave()"
+      [disabled]="!canSave()"
+      class="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-white shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      {{ saving() ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </td>
+</tr>

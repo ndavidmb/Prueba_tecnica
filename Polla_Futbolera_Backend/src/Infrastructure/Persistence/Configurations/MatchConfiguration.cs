@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,5 +28,20 @@ public class MatchConfiguration : IEntityTypeConfiguration<Match>
         builder.ToTable(t => t.HasCheckConstraint(
             "CK_Match_DifferentTeams",
             "\"LocalTeamId\" <> \"VisitorTeamId\""));
+
+        builder.HasData(
+            new { Id = 8, LocalTeamId = 5, VisitorTeamId = 6, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 9, LocalTeamId = 7, VisitorTeamId = 8, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 10, LocalTeamId = 5, VisitorTeamId = 7, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 11, LocalTeamId = 6, VisitorTeamId = 8, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 12, LocalTeamId = 8, VisitorTeamId = 5, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 13, LocalTeamId = 6, VisitorTeamId = 7, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 14, LocalTeamId = 1, VisitorTeamId = 2, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 15, LocalTeamId = 3, VisitorTeamId = 4, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 16, LocalTeamId = 1, VisitorTeamId = 3, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 17, LocalTeamId = 2, VisitorTeamId = 4, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 18, LocalTeamId = 4, VisitorTeamId = 1, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch },
+            new { Id = 19, LocalTeamId = 2, VisitorTeamId = 3, LocalGoals = (int?)null, VisitorGoals = (int?)null, Status = MatchStatus.UpcomingMatch }
+        );
     }
 }

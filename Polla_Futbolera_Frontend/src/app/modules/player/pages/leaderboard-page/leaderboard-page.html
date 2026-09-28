@@ -1,0 +1,25 @@
+<div class="mx-auto max-w-3xl px-4 py-8">
+  @if (errorMessage()) {
+    <p class="mb-4 rounded-md bg-red-50 px-4 py-2 text-sm text-red-700">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="text-sm text-gray-600">Cargando leaderboard...</p>
+  } @else if (entries().length === 0) {
+    <p class="text-sm text-gray-600">Todavía no hay resultados en el leaderboard.</p>
+  } @else {
+    <app-leaderboard-table
+      [entries]="entries()"
+      [selectedUserId]="selectedUserId()"
+      (selectUser)="onSelectUser($event)"
+    />
+
+    @if (selectedUserId() !== null) {
+      <app-user-history-panel
+        [history]="selectedUserHistory()"
+        [loading]="historyLoading()"
+        (close)="onCloseHistory()"
+      />
+    }
+  }
+</div>

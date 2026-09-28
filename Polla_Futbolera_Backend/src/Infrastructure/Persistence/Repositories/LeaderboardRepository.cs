@@ -9,6 +9,7 @@ public class LeaderboardRepository(AppDbContext context) : ILeaderboardRepositor
     public async Task<IEnumerable<UserLeaderboardDto>> GetLeaderboardAsync(CancellationToken cancellationToken = default)
     {
         var rows = await context.Users
+            .Where(u => u.Role != "Admin")
             .GroupJoin(
                 context.Bets,
                 u => u.Id,

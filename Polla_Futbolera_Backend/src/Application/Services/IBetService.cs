@@ -5,4 +5,5 @@ namespace Application.Services;
 public interface IBetService
 {
     Task<BetResultDto> PlaceBetAsync(int userId, CreateBetDto dto);
+    Task<IEnumerable<UserBetDto>> GetUserBetsAsync(int userId);
 }

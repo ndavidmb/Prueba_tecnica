@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Paleta de marca — genera utilidades como bg-primary, text-secondary, bg-background, etc. */
+@theme {
+  --color-primary: #303c6c;
+  --color-primary-hover: #262f56;
+  --color-secondary: #f4976c;
+  --color-secondary-hover: #ee7c49;
+  --color-accent: #b4dfe5;
+  --color-accent-hover: #99d0d8;
+  --color-accent-soft: #e6f6f8;
+  --color-warm: #fbe8a6;
+  --color-warm-hover: #f8db78;
+  --color-background: #FDEEB1;
+  --color-surface: #ffffff;
+}
+
+/* You can add global styles to this file, and also import other style files */

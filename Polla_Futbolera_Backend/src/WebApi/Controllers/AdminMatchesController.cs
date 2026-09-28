@@ -1,3 +1,4 @@
+using Application.DTOs.Common;
 using Application.DTOs.Matches;
 using Application.Services;
 using Domain.Exceptions;
@@ -12,6 +13,8 @@ namespace WebApi.Controllers;
 public class AdminMatchesController(IMatchService matchService) : ControllerBase
 {
     [HttpPut("{id}/result")]
+    [ProducesResponseType(typeof(MatchResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateResult(int id, UpdateMatchResultDto dto)
     {
         try
@@ -21,7 +24,7 @@ public class AdminMatchesController(IMatchService matchService) : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return BadRequest(new ErrorResponseDto(ex.Message));
         }
     }
 }

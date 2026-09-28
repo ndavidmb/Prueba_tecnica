@@ -1,4 +1,5 @@
 using Application.DTOs.Bets;
+using Application.DTOs.Matches;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Exceptions;
@@ -8,7 +9,8 @@ namespace Application.Services;
 
 public class BetService(
     IBetRepository betRepository,
-    IMatchRepository matchRepository) : IBetService
+    IMatchRepository matchRepository,
+    ITeamRepository teamRepository) : IBetService
 {
     public async Task<BetResultDto> PlaceBetAsync(int userId, CreateBetDto dto)
     {
@@ -36,4 +38,33 @@ public class BetService(
             IsExactMatch: false,
             IsTrendMatch: false);
     }
+
+    public async Task<IEnumerable<UserBetDto>> GetUserBetsAsync(int userId)
+    {
+        var bets = await betRepository.GetByUserIdAsync(userId);
+        var matches = await matchRepository.GetAllAsync();
+        var matchesById = matches.ToDictionary(match => match.Id);
+        var teams = await teamRepository.GetAllAsync();
+        var teamsById = teams.ToDictionary(team => team.Id);
+
+        return bets
+            .OrderByDescending(bet => bet.MatchId)
+            .Select(bet =>
+            {
+                var match = matchesById[bet.MatchId];
+                return new UserBetDto(
+                    bet.Id,
+                    bet.MatchId,
+                    ToTeamDto(teamsById[match.LocalTeamId]),
+                    ToTeamDto(teamsById[match.VisitorTeamId]),
+                    bet.LocalGoals,
+                    bet.VisitorGoals,
+                    match.LocalGoals,
+                    match.VisitorGoals,
+                    match.Status,
+                    bet.PointsEarned);
+            });
+    }
+
+    private static TeamDto ToTeamDto(Team team) => new(team.Id, team.Name);
 }

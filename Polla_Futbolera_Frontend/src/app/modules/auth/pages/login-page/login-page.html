@@ -1,0 +1,46 @@
+<div class="flex min-h-screen items-center justify-center bg-background px-4">
+  <div class="w-full max-w-sm rounded-xl bg-surface p-8 shadow-lg">
+    <h1 class="mb-6 text-center text-2xl font-semibold text-primary">Iniciar sesión</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+        />
+        @if (form.controls.email.invalid && form.controls.email.touched) {
+          <span class="text-xs text-red-600">Ingresa un email válido.</span>
+        }
+      </div>
+
+      <app-password-input
+        inputId="password"
+        label="Contraseña"
+        [control]="form.controls.password"
+        autocomplete="current-password"
+        [errorMessage]="form.controls.password.invalid && form.controls.password.touched ? 'La contraseña es obligatoria.' : null"
+      />
+
+      @if (errorMessage()) {
+        <p class="text-sm text-red-600">{{ errorMessage() }}</p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="mt-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {{ loading() ? 'Ingresando...' : 'Ingresar' }}
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      ¿No tienes cuenta?
+      <a routerLink="/auth/register" class="font-medium text-secondary hover:text-secondary-hover hover:underline">Regístrate</a>
+    </p>
+  </div>
+</div>

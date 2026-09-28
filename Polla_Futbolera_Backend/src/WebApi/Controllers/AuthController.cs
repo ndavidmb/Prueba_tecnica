@@ -1,4 +1,5 @@
 using Application.DTOs.Auth;
+using Application.DTOs.Common;
 using Application.Services;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,8 @@ namespace WebApi.Controllers;
 public class AuthController(IAuthService authService) : ControllerBase
 {
     [HttpPost("register")]
+    [ProducesResponseType(typeof(AuthResponseDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register(RegisterUserDto dto)
     {
         try
@@ -19,11 +22,13 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
         catch (DomainException ex)
         {
-            return Conflict(new { message = ex.Message });
+            return Conflict(new ErrorResponseDto(ex.Message));
         }
     }
 
     [HttpPost("login")]
+    [ProducesResponseType(typeof(AuthResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponseDto), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login(LoginDto dto)
     {
         try
@@ -33,7 +38,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         }
         catch (DomainException ex)
         {
-            return Unauthorized(new { message = ex.Message });
+            return Unauthorized(new ErrorResponseDto(ex.Message));
         }
     }
 }
